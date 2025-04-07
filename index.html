@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Base de Datos de Libros</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="b.css" />
 </head>
 <body>
   <div class="container">
@@ -17,7 +17,7 @@
     let booksData = [];
 
     // Cargar libros desde JSON
-    fetch('books.json')
+    fetch('a.json')
       .then(response => response.json())
       .then(data => {
         booksData = data;
