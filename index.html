@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base de Datos de Libros</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📚 Base de Datos de Libros</h1>
+    <input type="text" id="searchInput" placeholder="Buscar libros por título, autor..." />
+    <div id="booksContainer"></div>
+  </div>
 
+  <script>
+    let booksData = [];
+
+    // Cargar libros desde JSON
+    fetch('books.json')
+      .then(response => response.json())
+      .then(data => {
+        booksData = data;
+        displayBooks(booksData);
+      });
+
+    // Mostrar libros
+    function displayBooks(books) {
+      const container = document.getElementById('booksContainer');
+      container.innerHTML = '';
+
+      if (books.length === 0) {
+        container.innerHTML = '<p>No se encontraron libros.</p>';
+        return;
+      }
+
+      books.forEach(book => {
+        const bookDiv = document.createElement('div');
+        bookDiv.className = 'book';
+
+        bookDiv.innerHTML = `
+          <h3>${book.titulo}</h3>
+          <p><strong>Autor:</strong> ${book.autor}</p>
+          <p><strong>Año:</strong> ${book.anio}</p>
+        `;
+
+        container.appendChild(bookDiv);
+      });
+    }
+
+    // Buscar libros
+    document.getElementById('searchInput').addEventListener('input', e => {
+      const query = e.target.value.toLowerCase();
+      const filtered = booksData.filter(book =>
+        book.titulo.toLowerCase().includes(query) ||
+        book.autor.toLowerCase().includes(query)
+      );
+      displayBooks(filtered);
+    });
+  </script>
+</body>
+</html>
